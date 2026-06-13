@@ -17,6 +17,7 @@ const {
 const fs    = require("fs");
 const path  = require("path");
 const https = require("https");
+const http  = require("http");
 
 // ══════════════════════════════════════════════════════
 //  Persistence — data.json
@@ -2715,6 +2716,17 @@ client.once("ready", async () => {
       adIntervals.set(gId, id);
     }
   }
+});
+
+// ══════════════════════════════════════════════════════
+//  Keep-Alive HTTP Server (Render requirement)
+// ══════════════════════════════════════════════════════
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end("Bot is running ✅");
+}).listen(PORT, () => {
+  console.log(`[Keep-Alive] HTTP server listening on port ${PORT}`);
 });
 
 client.login(BOT_TOKEN);
